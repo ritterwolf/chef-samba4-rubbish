@@ -29,6 +29,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     dc.vm.provision 'shell', inline: $set_host_udc
 
     dc.vm.provision 'chef_client' do |chef|
+      chef.environment = 'udc'
+      chef.add_recipe 'samba4::domain_controller'
+      chef.json = {
+        'samba4' => {
+          'globals' => {
+            'dns_forwarder' => '10.0.2.3'
+          }
+        }
+      }
     end
   end
 
@@ -40,6 +49,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ws.vm.provision 'shell', inline: $set_host_udc
 
     ws.vm.provision 'chef_client' do |chef|
+      chef.environment = 'udc'
+      chef.add_recipe 'resolver'
+      chef.add_recipe 'samba4::domain_member'
+      chef.json = {
+        'resolver' => {
+          'search' => 'udc.lan',
+          'nameservers' => [ '192.168.100.5' ]
+        }
+      }
     end
   end
 

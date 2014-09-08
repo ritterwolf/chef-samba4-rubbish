@@ -1,0 +1,11 @@
+[global]
+<%- @globals.each do | k, v | %>
+  <%= k.gsub '_', ' ' %> = <%= v %>
+<%- end %>
+
+<%- @shares.each do | share, config | %>
+[<%= share %>]
+<%- config.each do | k, v | %>
+  <%= k.gsub '_', ' ' %> = <%= v %>
+<%- end %>
+<%- end %>

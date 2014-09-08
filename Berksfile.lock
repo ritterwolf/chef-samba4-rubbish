@@ -1,0 +1,9 @@
+DEPENDENCIES
+  resolver
+  samba4
+    path: .
+    metadata: true
+
+GRAPH
+  resolver (1.1.4)
+  samba4 (0.0.1)
